@@ -6,13 +6,18 @@ var reportSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  create_at: {
+  date: {
     type: Date,
-    default: Date.now,
   },
-  user_id:{
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  mistakes: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref :"users"
-  }
+      ref: "mistakes",
+    },
+  ],
 });
 module.exports = mongoose.model("reports", reportSchema);

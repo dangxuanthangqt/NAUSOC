@@ -1,9 +1,8 @@
 const jwtHelper = require("../../helpers/jwt_helper");
+require("dotenv").config();
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 var isAuth = async (req, res, next) => {
   const tokenFromClient = req.headers["authorization"]; // nho la viet thuong chu dau
-  // console.log(tokenFromClient);
-  // console.log(req.headers)
   if (tokenFromClient) {
     try {
       const decode = await jwtHelper.verifyToken(
@@ -13,6 +12,7 @@ var isAuth = async (req, res, next) => {
       req.jwtdecode = decode;
       next();
     } catch (err) {
+      console.log(err)
       return res.status(403).json({
         message: "Unauthorized.",
       });

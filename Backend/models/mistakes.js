@@ -6,5 +6,9 @@ var mistakeSchema = new mongoose.Schema({
   },
   name: String,
   description: String,
+  create_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
-module.exports = mongoose.model("mistake", mistakeSchema);
+module.exports = mongoose.model("mistakes", mistakeSchema);

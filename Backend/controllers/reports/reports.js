@@ -1,11 +1,16 @@
 const reportModel = require("../../models/reports");
 var startOfDay = require("date-fns/startOfDay");
 var endOfDay = require("date-fns/endOfDay");
+var dayjs = require("dayjs");
+
+const moment = require("moment-timezone");
 exports.createReport = async (req, res, next) => {
   let data = req.body;
+
   try {
     const dailyReport = new reportModel({
       ...data,
+     
       user_id: req.jwtdecode.data._id,
     });
     const result = await dailyReport.save();
@@ -44,10 +49,10 @@ exports.getReportFollowUserId = async (req, res, next) => {
 };
 exports.getReportFollowUserId_byDate = async (req, res, next) => {
   const user_id = req.jwtdecode.data._id;
-  const date = req.params.date;
-  let start_date = startOfDay(new Date(date));
-  let end_date = endOfDay(new Date(date));
-  console.log(start_date, end_date);
+  const date = req.body;
+  console.log(req.body)
+  let start_date = new Date(date.startDate);
+  let end_date = new Date(date.endDate);
   try {
     const result = await reportModel
       .find({
@@ -77,7 +82,6 @@ exports.getReportFollowUserId_byDate = async (req, res, next) => {
   }
 };
 exports.getAllDailyReports = async (req, res) => {
-  console.log("aaaaaaaaaaaaaa");
   try {
     const result = await reportModel
       .find()
@@ -100,14 +104,17 @@ exports.getAllDailyReports = async (req, res) => {
     });
   }
 };
-exports.getAllDailyReports_byDate = async(req,res)=>{
-  const date = req.params.date;
-  let start_date = startOfDay(new Date(date));
-  let end_date = endOfDay(new Date(date));
+exports.getAllDailyReports_byDate = async (req, res) => {
+  const date = req.body;
+  console.log(req.body)
+  let start_date = new Date(date.startDate);
+  let end_date = new Date(date.endDate);
+  console.log(start_date, end_date);
+
   try {
     const result = await reportModel
       .find({
-        $and: [{ date: { $gte: start_date } }, { date: { $lte: end_date } }]
+        $and: [{ date: { $gte: start_date } }, { date: { $lte: end_date } }],
       })
       .populate({
         path: "mistakes user_id",
@@ -127,7 +134,7 @@ exports.getAllDailyReports_byDate = async(req,res)=>{
       message: "ERROR 500 !",
     });
   }
-}
+};
 exports.deleteReportFollowId = async (req, res) => {
   const report_id = req.params.id;
   try {

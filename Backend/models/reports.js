@@ -8,6 +8,7 @@ var reportSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
+   
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,

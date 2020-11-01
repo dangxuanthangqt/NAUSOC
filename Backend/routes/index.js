@@ -43,8 +43,8 @@ router.get("/mistakes/admin/all", isAuth, getAllMistakes);
 //----reports----
 router.post("/daily-reports", isAuth, createReport);
 router.get("/daily-reports", isAuth, getReportFollowUserId);
-router.get("/daily-reports/:date", isAuth, getReportFollowUserId_byDate);
+router.post("/daily-reports/date", isAuth, getReportFollowUserId_byDate);
 router.delete("/daily-reports/:id", isAuth, deleteReportFollowId);
 router.get("/daily-reports/admin/all", getAllDailyReports);
-router.get("/daily-reports/admin/:date", getAllDailyReports_byDate);
+router.post("/daily-reports/admin/date", getAllDailyReports_byDate);
 module.exports = router;

@@ -8,11 +8,16 @@ var reportSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-   
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
+  },
+  defective_product: {
+    type: Number,
+  },
+  standard_product: {
+    type: Number,
   },
   mistakes: [
     {
